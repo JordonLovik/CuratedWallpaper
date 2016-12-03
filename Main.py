@@ -1,8 +1,16 @@
-#import os is for make directory
+import urllib.request
 import os, sys
-#makes Directory if dosent already exist
+
 directory = "c:\CuratedWallpaper"
-path = directory.encode()
-if not os.path.exists(path):
-    os.makedirs(path)
+
+#makes Directory if dosent already exist
+def makedir(directory):
+    folderpath = directory.encode()
+    if not os.path.exists(folderpath):
+        os.makedirs(folderpath)
+        return;
+
+makedir(directory)
+
+urllib.request.urlretrieve ("http://wallpapercave.com/wp/hUukl3e.jpg", "\CuratedWallpaper\Mariobg.jpg")
 
