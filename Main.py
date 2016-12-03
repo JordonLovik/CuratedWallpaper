@@ -3,7 +3,11 @@ import os, sys
 import ctypes
 
 directory = "c:\CuratedWallpaper"
-imagePath = directory + "Mario.bmp"
+imagePath = directory + "\Mario.bmp"
+#imagePath2 = imagePath.encode()
+#check to see whats inside imagePath
+print (imagePath)
+#print (imagePath2)
 
 #makes Directory if dosent already exist
 def makedir(directory):
