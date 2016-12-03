@@ -1,3 +1,4 @@
+#import os is for make directory
 import os, sys
 #makes Directory if dosent already exist
 directory = "c:\CuratedWallpaper"
