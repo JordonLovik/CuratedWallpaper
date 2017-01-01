@@ -1,31 +1,41 @@
 import urllib.request
+from os.path import expanduser
 import os, sys
 import ctypes
 
-directory = "c:\CuratedWallpaper"
-imagePath = directory + "\Mario.bmp"
+#directory = "c:\CuratedWallpaper"
+directory = expanduser(r"~") + r"\Pictures"
+print (directory)
+
+imagePath = directory + r"\Mario.bmp"
+#changePath is for debugging only
+#changePath = "c:\CuratedWallpaper\8.jpg"
 #imagePath2 = imagePath.encode()
 #check to see whats inside imagePath
-print (imagePath)
-#print (imagePath2)
 
+print (imagePath)
+h
 #makes Directory if dosent already exist
 def makedir(directory):
-    folderpath = directory.encode()
-    if not os.path.exists(folderpath):
-        os.makedirs(folderpath)
+    if not os.path.exists(directory):
+        os.makedirs(directory)
         return;
 
+#need to change path to variable
 def changeBG(imagePath):
     SPI_SETDESKWALLPAPER = 20
     ctypes.windll.user32.SystemParametersInfoA(SPI_SETDESKWALLPAPER, 0, imagePath , 0)
+    SPIF_UPDATEINIFILE = 0x2
     return;
 
 #makes diretory in C:\ if one is not already there
 makedir(directory)
 
+#download an image to location
+#urllib.request.urlretrieve (r"http://www.emunix.emich.edu/~evett/GameProgramming/BookCode/chapter11.new/timedloop/background.bmp", imagePath)
+
 #takes in 1 argument: image file path and places it as background image
 changeBG(imagePath)
-
-#download an image
-urllib.request.urlretrieve ("http://www.emunix.emich.edu/~evett/GameProgramming/BookCode/chapter11.new/timedloop/background.bmp", "\CuratedWallpaper\Mario.bmp")
+print
+print ("imagePath var " + imagePath)
+#print ("changePath var " + changePath)
