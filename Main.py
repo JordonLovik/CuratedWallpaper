@@ -5,12 +5,17 @@ import os, sys
 import ctypes
 
 def main():
-    directory = expanduser(r"~") + r"\Pictures"
-    imagePath = directory + r"\Mario.bmp"
+    delay = 5
+    #list of strings for local files
+    photoAlbum = []
+    photoAlbum.append(r"C:\CuratedWallpaper\1.jpg")
+    photoAlbum.append(r"C:\CuratedWallpaper\2.jpg")
+    photoAlbum.append(r"C:\CuratedWallpaper\3.jpg")
+    photoAlbum.append(r"C:\CuratedWallpaper\4.jpg")
 
-    start = time.time()
-    finish = time.time()
-
+    #main program loop
+    directory = expanduser(r"~") + r"\Pictures" #directory is the home directory of computer plus /Picutres
+    #imagePath = directory + r"\Mario.bmp"
 
     #makes Directory if dosent already exist
     def makedir(directory):
@@ -27,8 +32,16 @@ def main():
     #makes diretory in C:\ if one is not already there
     makedir(directory)
 
-    #download an image to location
-    urllib.request.urlretrieve ("http://www.emunix.emich.edu/~evett/GameProgramming/BookCode/chapter11.new/timedloop/background.bmp", imagePath)
+    #main loop for changing bg
+    for photos in photoAlbum:
+        imagePath = photos
+        print(imagePath)
+        changeBG(imagePath)
+        time.sleep(delay)
+
+
+        #download an image to location
+    #urllib.request.urlretrieve ("http://www.emunix.emich.edu/~evett/GameProgramming/BookCode/chapter11.new/timedloop/background.bmp", imagePath)
     #http://www.pixelstalk.net/wp-content/uploads/2016/06/High-resolution-highres-pictures.jpg
     #http://www.alsglobal.com/~/media/Images/Divisions/Life%20Sciences/Environmental/Houston.jpg
     #http://wallpaper-gallery.net/images/high-resolution-images/high-resolution-images-20.gif
@@ -36,15 +49,13 @@ def main():
     #http://wallpaper-gallery.net/images/hi-res-wallpaper/hi-res-wallpaper-8.jpg
     #http://www.wearemoviegeeks.com/wp-content/uploads/WTCLibertyStatePark-HighRes-PhotoCreditErikaKoop-012.jpg
 
-    #main program loop
-    while finish - start > 10:
-        imagePath = directory + r"\Water.jpg"
-        changeBG(imagePath)
-    else:
-        imagePath = directory + r"\Mario.bmp"
-        changeBG(imagePath)
+   # while finish - start > 10:
+        #imagePath = photoAlbum. + r"\Water.jpg"
+       # changeBG(imagePath)
+    #else:
+        #imagePath = directory + r"\Mario.bmp"
+        #changeBG(imagePath)
 
     #takes in 1 argument: image file path and places it as background image
-    changeBG(imagePath)
-
+    #changeBG(imagePath)
 if __name__ == "__main__": main()
