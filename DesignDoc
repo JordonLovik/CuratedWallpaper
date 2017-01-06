@@ -1,0 +1,8 @@
+Basic Design Doc
+
+#Downloading images from the web#
+use a .txt files to reference images hosted around the web
+the txt file is then imported via the gui using a wizard.
+the txt file is loaded into the program and assigned to an array of strings
+user then chooses download location for the files (note user should be aware that they must not change images location after this point)
+the save location the user chooses is stored in the program and referenced when pulling the images for the desktop background.
