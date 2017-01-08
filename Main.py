@@ -5,21 +5,15 @@ import os, sys
 import ctypes
 
 def main():
-    delay = 1 #time delay between
-    saveLocation = r"C:\CuratedWallpaper"
-    #list of strings for local files
-    photoAlbum = []
-    photoAlbum.append(r"C:\CuratedWallpaper\1.jpg")
-    photoAlbum.append(r"C:\CuratedWallpaper\2.jpg")
-    photoAlbum.append(r"C:\CuratedWallpaper\3.jpg")
-    photoAlbum.append(r"C:\CuratedWallpaper\4.jpg")
+    delay = 2 #time delay between
+    saveLocation = r"C:\CuratedWallpaper\1"
 
     directory = expanduser(r"~") + r"\Pictures" #directory is the home directory of computer plus /Picutres
     imagePath = directory + r"\Mario.bmp"
 
     #File with urls delimited by ','
     f = open(r'C:\CuratedWallpaper\f.txt', 'r')
-    Urls = f.read().split(',')
+    Urls = f.read().split('\n')
     f.close()
 
     #makes Directory if dosent already exist
@@ -35,15 +29,19 @@ def main():
         return;
 
     #loop for saving images based on Urls array which is pulled from f.txt
-    for pics in Urls:
-        imagePath = pics
-        #urllib.request.urlretrieve (Urls,imagePath)
-
-    #loop for changing bg
-    for photos in photoAlbum:
-        imagePath = photos
-        changeBG(imagePath)
+    for item in Urls:
+        filename = saveLocation + item.split('/')[-1]
+        urllib.request.urlretrieve(item, filename)
+        #outputString = path.abspath(filename)
+        print(filename)
+        print(item)
+        #change BG after delay
+        changeBG(filename)
         time.sleep(delay)
+    else:
+        pass
+        #raise Exception("bad url")
+
 
     #webUrl.append(r"http://www.alsglobal.com/~/media/Images/Divisions/Life%20Sciences/Environmental/Houston.jpg")
 
