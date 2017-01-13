@@ -9,18 +9,15 @@ def main():
 
     #for some reason th user input causes errors
     #UserInput1 = int(input("Enter desired delay: "))
-    #print(UserInput1, type(UserInput1))
-    #delay = UserInput1
 
     #Global Variables
-    #directory = expanduser(r"~") + r"\Pictures"
     directory = expanduser(r"~") + r"\Pictures\CuratedWallpaper"
     print (directory)
-    #saveLocation = r"C:\CuratedWallpaper\1"
     saveLocation = directory + r"\CWP_"
     localFiles = []
 
-    #f = open(r'C:\CuratedWallpaper\f.txt', 'r')
+    #download the config file for web images
+    #urllib.request.urlretrieve(r"https://drive.google.com/open?id=1oIaJ49u4f5kgTwojGqHhDW_wawLGcgjoT1qra24ADLc", directory + r"\f.txt")
     f = open(directory + r"\f.txt", 'r')
     Urls = f.read().split('\n')
     f.close()
