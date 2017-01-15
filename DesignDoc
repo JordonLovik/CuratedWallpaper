@@ -7,6 +7,11 @@ the txt file is loaded into the program and assigned to an array of strings
 user then chooses download location for the files (note user should be aware that they must not change images location after this point)
 the save location the user chooses is stored in the program and referenced when pulling the images for the desktop backgroundd
 
+ImageImport()
+    take user input delimited by \n
+    save that input in f.txt
+
+
 import filecmp
 
 #The code below is my attempt to check two files against each other in order to circumvent downloading images multiple times
