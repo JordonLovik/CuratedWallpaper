@@ -45,5 +45,6 @@ def main():
     for i in localFiles:
         changeBG(i)
         time.sleep(delay)
+        #test
 
 if __name__ == "__main__": main()
