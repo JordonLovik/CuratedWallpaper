@@ -14,12 +14,12 @@ def main():
     directory = expanduser(r"~") + r"\Pictures\CuratedWallpaper"
     print (directory)
     saveLocation = directory + r"\CWP_"
+    #localFiles is defined globally  so that its acceptable by multiple funtions
     localFiles = []
 
-    #download the config file for web images
-    #urllib.request.urlretrieve(r"https://drive.google.com/open?id=1oIaJ49u4f5kgTwojGqHhDW_wawLGcgjoT1qra24ADLc", directory + r"\f.txt")
+    #download the config file for web images)
     f = open(directory + r"\f.txt", 'r')
-    Urls = f.read().split('\n')
+    Urls = f.read().split('\n') # clean this up
     f.close()
 
     def makedir(directory):
@@ -38,14 +38,10 @@ def main():
             urllib.request.urlretrieve(i, filename)
             #print(filename)
             #print(i)
-        else:
-            pass
-            #raise Exception("bad url")
 
     makedir(directory)
     DownloadImages(Urls)
 
-    #while loop will replace for loop in final program
     for i in localFiles:
         changeBG(i)
         time.sleep(delay)

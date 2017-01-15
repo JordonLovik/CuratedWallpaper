@@ -5,5 +5,37 @@ use a .txt files to reference images hosted around the web
 the txt file is then imported via the gui using a wizard.
 the txt file is loaded into the program and assigned to an array of strings
 user then chooses download location for the files (note user should be aware that they must not change images location after this point)
-the save location the user chooses is stored in the program and referenced when pulling the images for the desktop background.
+the save location the user chooses is stored in the program and referenced when pulling the images for the desktop backgroundd
 
+import filecmp
+
+#The code below is my attempt to check two files against each other in order to circumvent downloading images multiple times
+{
+     #this section writes the url location to file d.txt
+                #fh = open(directory + r"\d.txt", 'a')
+                #fh.write(i + '\n')
+
+      def CreateFile(filename):
+            my_file = Path(directory + filename)
+            if my_file.is_file():
+                #don't do anything
+                pass
+            else:
+                print("file does not exist")
+                #create file
+                open(filename, "w+")
+
+        def compairfiles(file1, file2):
+            fileA = directory + file1
+            fileB = directory +  file2
+            if filecmp.cmp(fileA, fileB):
+                return True
+            else:
+                return False
+
+        if compairfiles(r"\d.txt",r"\f.txt") == True:
+        print("compairfiles = true")
+    else:
+        print("compairfiles = false")
+        DownloadImages(Urls)
+}
