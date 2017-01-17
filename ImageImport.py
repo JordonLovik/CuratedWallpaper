@@ -6,25 +6,29 @@
     save urls to f.txt file for later use
 """
 import urllib.request, urllib.error
+import http.client
 
 list = []
-listlenght = 2
+listlenght = 3
+
+
+
+
 
 def ImageImport():
     while len(list) < listlenght:
+        print(len(list))
         item = input("enter urls: ")
-        x = urllib.urlopen(item)
-        x.getcode()
-        print(x)
-        if  x == "404":
-            print(x)
-            list.remove(item)
-        if x == "200":
-            print(x)
-            list.remove(item)
+        c = http.client.HTTPSConnection(item)
+        c.request("HEAD", "/")
+        res = c.getresponse()
+        #print(res.status, res.reason)
+        data = res.reason
+        print(list)
+        #if state just wont work
+        if data == "OK":
+            list.pop()
         else:
             list.append(item)
-        print(list)
-
 
 ImageImport()
