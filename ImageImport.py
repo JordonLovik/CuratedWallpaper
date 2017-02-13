@@ -5,30 +5,27 @@
     store urls in list
     save urls to f.txt file for later use
 """
-import urllib.request, urllib.error
-import http.client
+import urllib.request
 
-list = []
-listlenght = 3
+def is_downloadable(url):
+    _url = url
+    req = urllib.request.Request(_url)
+    req.get_method = lambda: 'HEAD'
+    try:
+        urllib.request.urlopen(req)
+        print('sucess')
+        return True
+    except urllib.request.HTTPError:
+        print('failure')
+        return False
 
+urllist = ["http://wallpapercave.com/wp/46IcIP8.jpg","http://wallpapercave.com/wp/46IcIP8.jpg","http://wallpapercave.com/wp/46IcIP8.jpg2","http://wallpapercave.com/wp/46IcIP8.jpg"]
+goodlist = []
+for i in urllist:
+    check = is_downloadable(i)
+    if check == True:
+        goodlist.append(i)
+    else:
+       print('an error occured when accessing a url')
 
-
-
-
-def ImageImport():
-    while len(list) < listlenght:
-        print(len(list))
-        item = input("enter urls: ")
-        c = http.client.HTTPSConnection(item)
-        c.request("HEAD", "/")
-        res = c.getresponse()
-        #print(res.status, res.reason)
-        data = res.reason
-        print(list)
-        #if state just wont work
-        if data == "OK":
-            list.pop()
-        else:
-            list.append(item)
-
-ImageImport()
+print(goodlist)
