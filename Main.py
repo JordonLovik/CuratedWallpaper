@@ -5,7 +5,7 @@ import os
 import ctypes
 
 def main():
-
+    #
     #Global Variables
     directory = expanduser(r'~') + r'\Pictures\CuratedWallpaper'
     saveLocation = directory + r'\CWP_'
