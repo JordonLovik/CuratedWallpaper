@@ -5,22 +5,18 @@ import os
 import ctypes
 
 def main():
-    delay = 1
-
-    #for some reason th user input causes errors
-    #UserInput1 = int(input("Enter desired delay: "))
 
     #Global Variables
-    directory = expanduser(r"~") + r"\Pictures\CuratedWallpaper"
-    saveLocation = directory + r"\CWP_"
-    #localFiles is defined globally  so that its acceptable by multiple funtions
+    directory = expanduser(r'~') + r'\Pictures\CuratedWallpaper'
+    saveLocation = directory + r'\CWP_'
+    delay = 1
     localFiles = []
+    goodurllist = []
 
-    #download the config file for web images)
-    f = open(directory + r"\f.txt", 'r')
-    Urls = f.read().split('\n') # clean this up
+    f = open(directory + r'\f.txt', 'r')
+    Urls = f.read().split('\n')
     f.close()
-    dow = 0
+
 
     def makedir(directory):
         if not os.path.exists(directory):
@@ -29,21 +25,42 @@ def main():
         SPI_SETDESKWALLPAPER = 20
         ctypes.windll.user32.SystemParametersInfoW(SPI_SETDESKWALLPAPER, 0, Path , 0)
         SPIF_UPDATEINIFILE = 0x2
-    def DownloadImages(imageUrls,number):
-        for i in imageUrls:
+    def downloadimages(imageurls):
+        print('*downloading*')
+        _countertotal = len(imageurls)
+        _counter = 0
+        for i in imageurls:
             filename = saveLocation + i.split('/')[-1]
             localFiles.append(filename)
             urllib.request.urlretrieve(i, filename)
-            number = number + 1
-            print(number)
+            _counter = _counter + 1
+            print("Downloading: {} of {}".format(_counter, _countertotal))
+
+    def is_downloadable(url):
+        _url = url
+        req = urllib.request.Request(_url)
+        req.get_method = lambda: 'HEAD'
+        try:
+            urllib.request.urlopen(req)
+            print('{} succeeded'.format(_url))
+            return True
+        except urllib.request.HTTPError:
+            print('{} failed'.format(_url))
+            return False
+
+    print('*testing downloadability*')
+    for i in Urls:
+        check = is_downloadable(i)
+        if check == True:
+            goodurllist.append(i)
 
     makedir(directory)
-    DownloadImages(Urls, dow)
+    downloadimages(goodurllist)
+    #downloadimages(Urls) to see is_downloadable working
 
     for i in localFiles:
         changeBG(i)
         time.sleep(delay)
-        #test
 
-if __name__ == "__main__": main()
+if __name__ == '__main__': main()
 

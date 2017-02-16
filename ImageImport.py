@@ -16,7 +16,7 @@ def is_downloadable(url):
         print('sucess')
         return True
     except urllib.request.HTTPError:
-        print('failure')
+        print('failure at: {}' .format(_url))
         return False
 
 urllist = ["http://wallpapercave.com/wp/46IcIP8.jpg","http://wallpapercave.com/wp/46IcIP8.jpg","http://wallpapercave.com/wp/46IcIP8.jpg2","http://wallpapercave.com/wp/46IcIP8.jpg"]
