@@ -5,18 +5,16 @@ import os
 import ctypes
 
 def main():
-    #
     #Global Variables
     directory = expanduser(r'~') + r'\Pictures\CuratedWallpaper'
     saveLocation = directory + r'\CWP_'
-    delay = 1
-    localFiles = []
+    delay = 0
+    displayarray = []
     goodurllist = []
 
-    f = open(directory + r'\f.txt', 'r')
-    Urls = f.read().split('\n')
-    f.close()
-
+    file = open(directory + r'\f.txt', 'r')
+    Urls = file.read().split('\n') #line delimite urls and store in array
+    file.close()
 
     def makedir(directory):
         if not os.path.exists(directory):
@@ -26,39 +24,40 @@ def main():
         ctypes.windll.user32.SystemParametersInfoW(SPI_SETDESKWALLPAPER, 0, Path , 0)
         SPIF_UPDATEINIFILE = 0x2
     def downloadimages(imageurls):
-        print('*downloading*')
         _countertotal = len(imageurls)
         _counter = 0
         for i in imageurls:
             filename = saveLocation + i.split('/')[-1]
-            localFiles.append(filename)
+            displayarray.append(filename)
             urllib.request.urlretrieve(i, filename)
-            _counter = _counter + 1
+            _counter += 1
             print("Downloading: {} of {}".format(_counter, _countertotal))
-
+    #build in more error checking. if line has no url etc
     def is_downloadable(url):
         _url = url
         req = urllib.request.Request(_url)
         req.get_method = lambda: 'HEAD'
         try:
             urllib.request.urlopen(req)
+            goodurllist.append(_url)
             print('{} succeeded'.format(_url))
-            return True
         except urllib.request.HTTPError:
             print('{} failed'.format(_url))
-            return False
 
+    makedir(directory)
+    for i in Urls:
+        is_downloadable(i)
+    """
     print('*testing downloadability*')
     for i in Urls:
         check = is_downloadable(i)
         if check == True:
             goodurllist.append(i)
-
-    makedir(directory)
+    """
     downloadimages(goodurllist)
     #downloadimages(Urls) to see is_downloadable working
 
-    for i in localFiles:
+    for i in displayarray:
         changeBG(i)
         time.sleep(delay)
 
