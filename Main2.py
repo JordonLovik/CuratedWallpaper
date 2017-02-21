@@ -46,7 +46,7 @@ def main():
         for x in imagestore:
             changebg(x)
 
-
+    #
         #keep exicuting program?
         answer = input("keep program running? y/n: ")
         if answer == 'y':
