@@ -7,40 +7,15 @@ the txt file is loaded into the program and assigned to an array of strings
 user then chooses download location for the files (note user should be aware that they must not change images location after this point)
 the save location the user chooses is stored in the program and referenced when pulling the images for the desktop backgroundd
 
-ImageImport()
-    take user input delimited by \n
-    save that input in f.txt
+           ####Design####
+warn users if you move or edit image names you will need to delete the all urls file which will force the system to redownload all files
 
 
-import filecmp
+on program start create and or read download_history file
+assign urls to a set
 
-#The code below is my attempt to check two files against each other in order to circumvent downloading images multiple times
-{
-     #this section writes the url location to file d.txt
-                #fh = open(directory + r"\d.txt", 'a')
-                #fh.write(i + '\n')
+before downloading image check to see download_history file exists
+download new images
+add image to set with all images
 
-      def CreateFile(filename):
-            my_file = Path(directory + filename)
-            if my_file.is_file():
-                #don't do anything
-                pass
-            else:
-                print("file does not exist")
-                #create file
-                open(filename, "w+")
-
-        def compairfiles(file1, file2):
-            fileA = directory + file1
-            fileB = directory +  file2
-            if filecmp.cmp(fileA, fileB):
-                return True
-            else:
-                return False
-
-        if compairfiles(r"\d.txt",r"\f.txt") == True:
-        print("compairfiles = true")
-    else:
-        print("compairfiles = false")
-        DownloadImages(Urls)
-}
+when all downloads are finished save download history file

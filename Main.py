@@ -8,13 +8,14 @@ def main():
     #Global Variables
     directory = expanduser(r'~') + r'\Pictures\CuratedWallpaper'
     saveLocation = directory + r'\CWP_'
-    delay = 0
+    delay = 1
     displayarray = []
     goodurllist = []
 
     file = open(directory + r'\f.txt', 'r')
-    Urls = file.read().split('\n') #line delimite urls and store in array
+    urls = file.read().split('\n') #line delimite urls and store in array
     file.close()
+
 
     def makedir(directory):
         if not os.path.exists(directory):
@@ -44,18 +45,21 @@ def main():
         except urllib.request.HTTPError:
             print('{} failed'.format(_url))
 
+
+
     makedir(directory)
-    for i in Urls:
+    for i in urls:
         is_downloadable(i)
     """
     print('*testing downloadability*')
-    for i in Urls:
-        check = is_downloadable(i)
+    for j in urls:
+        check = is_downloadable(j)
         if check == True:
-            goodurllist.append(i)
+            goodurllist.append(j)
     """
     downloadimages(goodurllist)
-    #downloadimages(Urls) to see is_downloadable working
+
+    #downloadimages(rls) to see is_downloadable working
 
     for i in displayarray:
         changeBG(i)
