@@ -5,10 +5,22 @@ import os
 import ctypes
 
 def main():
+    directory = expanduser(r'~') + r'\Pictures\CuratedWallpaper'
+    saveLocation = directory + r'\CWP_'
+
+
+    urlfile = open(directory + r'\urlfile.txt', 'r')
+    urlslist = urlfile.read().split('\n') #line delimite urls and store in array
+    urlfile.close()
+
+    storefile = open(directory + r'\storefile.txt', 'r')
+    imagestore = storefile.read().split('\n')  # line delimite urls and store in array
+    storefile.close()
+
+
     running = True
-    urls = ["1cwp.com", "1cwp.com"]
     localimages = ["1cwp.jpg", "2cwp.jpg"]
-    imagestore = 'oneimagefile'
+    #imagestore = []
 
     """inicialize this list with downloadhistory.txt and save to it later on"""
     #downloadhistory [] = open(downloadhistory.txt)
@@ -16,14 +28,24 @@ def main():
     def checklink(imageurl):
         """takes in one url and checks it - stores good urls in list -
             returns true or false"""
-        #takes in single image url
-        #does true false check
-        #passes results
-        pass
-    def changebg(image):
+        _imageurl = imageurl
+        req = urllib.request.Request(_imageurl)
+        req.get_method = lambda: 'HEAD'
+        try:
+            urllib.request.urlopen(req)
+            print('{} succeeded'.format(_imageurl))
+            return True
+        except urllib.request.HTTPError:
+            print('{} failed'.format(_imageurl))
+            return False
+
+    def changebg(imagepath):
         """takes in an image and sets background to it"""
-        #change Background
-        pass
+        _imagepath = imagepath
+        SPI_SETDESKWALLPAPER = 20
+        ctypes.windll.user32.SystemParametersInfoW(SPI_SETDESKWALLPAPER, 0, _imagepath, 0)
+        SPIF_UPDATEINIFILE = 0x2
+
     def downloadimage(image):
         """takes in one image and downloads it - saves file xcwp.jpg -
             stores list of downloaded images to list imagestore image"""
@@ -35,12 +57,20 @@ def main():
     while running:
 
         # only run this for images that have not already been downloaded
-        for j in urls:
-            #if j !in downloadhistory:
+        for j in urlslist:
+            if j not in imagestore:
                 if checklink(j) == True: #if check is sucessfull download image
                     downloadimage(j)
+                    imagestore.append(j)
                     # save downloadimage(j) to file downloadhistory.txt
                 else: pass #throw error to log and keep going
+            else: pass
+
+        #store already downloaded images to file
+        for t in imagestore:
+            print (t)
+
+        storefile.close()
 
         #setup delay here
         for x in imagestore:
