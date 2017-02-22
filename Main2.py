@@ -5,18 +5,25 @@ import os
 import ctypes
 
 def main():
-    directory = expanduser(r'~') + r'\Pictures\CuratedWallpaper'
-    saveLocation = directory + r'\CWP_'
 
+    def openfile(directory, filename, accesstype, delimiter='\n'):
+        f = os.path.join(directory, filename)
+        file = open(f, accesstype)
+        filelist = file.read().split(delimiter)
+        file.close()
+        return filelist
 
-    urlfile = open(directory + r'\urlfile.txt', 'r')
+    dir = expanduser(r'~') + r'\Pictures\CuratedWallpaper'
+    saveLocation = dir + r'\CWP_'
+
+    urls = openfile(dir, 'storefile.txt', 'r')
+
+    urlfile = open(dir + r'\urlfile.txt', 'r')
     urlslist = urlfile.read().split('\n') #line delimite urls and store in array
     urlfile.close()
 
-    storefile = open(directory + r'\storefile.txt', 'r')
+    storefile = open(dir + r'\storefile.txt', 'r+')
     imagestore = storefile.read().split('\n')  # line delimite urls and store in array
-    storefile.close()
-
 
     running = True
     localimages = ["1cwp.jpg", "2cwp.jpg"]
@@ -55,28 +62,26 @@ def main():
         pass
 
     while running:
-
         # only run this for images that have not already been downloaded
         for j in urlslist:
             if j not in imagestore:
                 if checklink(j) == True: #if check is sucessfull download image
                     downloadimage(j)
-                    imagestore.append(j)
                     # save downloadimage(j) to file downloadhistory.txt
+                    if j not in imagestore:
+                        imagestore.append(j)
+                        storefile.write(j + '\n')
                 else: pass #throw error to log and keep going
             else: pass
 
         #store already downloaded images to file
-        for t in imagestore:
-            print (t)
-
+        print(imagestore)
         storefile.close()
 
         #setup delay here
         for x in imagestore:
             changebg(x)
 
-    #
         #keep exicuting program?
         answer = input("keep program running? y/n: ")
         if answer == 'y':
