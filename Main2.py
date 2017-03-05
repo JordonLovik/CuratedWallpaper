@@ -3,6 +3,8 @@ from os.path import expanduser
 import time
 import os
 import ctypes
+#up next dowload image func implemented
+#store local images to be referenced
 
 def main():
 
@@ -33,7 +35,7 @@ def main():
     #downloadhistory [] = open(downloadhistory.txt)
 
     def checklink(imageurl):
-        """takes in one url and checks it - stores good urls in list -
+        """takes in one url and checks it -
             returns true or false"""
         _imageurl = imageurl
         req = urllib.request.Request(_imageurl)
@@ -64,13 +66,11 @@ def main():
     while running:
         # only run this for images that have not already been downloaded
         for j in urlslist:
-            if j not in imagestore:
+            if j not in imagestore: # if image has already been dowloaded
                 if checklink(j) == True: #if check is sucessfull download image
                     downloadimage(j)
-                    # save downloadimage(j) to file downloadhistory.txt
-                    if j not in imagestore:
-                        imagestore.append(j)
-                        storefile.write(j + '\n')
+                    imagestore.append(j)
+                    storefile.write(j + '\n')
                 else: pass #throw error to log and keep going
             else: pass
 
@@ -88,6 +88,5 @@ def main():
             pass
         else:
             running = False
-
 
 if __name__ == '__main__': main()
