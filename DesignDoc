@@ -1,5 +1,14 @@
 Basic Design Doc
 
+#classes
+class photoalbum:
+    def downloadphoto(self, urls) #urls is a list of urls extracted from file.
+        self.urls = urls
+    def savephoto(self, url, filesave)
+        self.url = url
+        self.filesave = filesave
+
+
 #Downloading images from the web#
 use a .txt files to reference images hosted around the web
 the txt file is then imported via the gui using a wizard.
@@ -19,3 +28,13 @@ download new images
 add image to set with all images
 
 when all downloads are finished save download history file
+
+
+    def openfile(directory, filename, accesstype, delimiter='\n'):
+            """Function takes in directory file name and access
+                            type for reading a file"""
+        f = os.path.join(directory, filename)
+        file = open(f, accesstype)
+        filelist = file.read().split(delimiter)
+        file.close()
+        return filelist
