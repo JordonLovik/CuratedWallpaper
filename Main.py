@@ -64,32 +64,31 @@ def main():
             #print("Downloaded: " + imageurl + 'to: ' + filename)
         displayalbum.append(filename) #append File name to display array for changing BG later
 
-    #while running:
+    while running:
         # only run this for images that have not already been downloaded
-    for i in urlslist:
-        if i not in imagestore: # if image has already been dowloaded
-            if checklink(i) == True: #if check is sucessfull download image
-                downloadimage(i, True)
-                imagestore.append(i)
-                storefile.write(i + '\n')
-            else: pass #throw error to log and keep going
-        else: #case the images have been downloaded before
-            downloadimage(i, False)
-    #print(imagestore)
-    storefile.close()
+        for i in urlslist:
+            if i not in imagestore: # if image has already been dowloaded
+                if checklink(i) == True: #if check is sucessfull download image
+                    downloadimage(i, True)
+                    imagestore.append(i)
+                    storefile.write(i + '\n')
+                else: pass #throw error to log and keep going
+            else: #case the images have been downloaded before
+                downloadimage(i, False)
+        #print(imagestore)
+        storefile.close()
 
-    delay = input('Enter transition time desired: ')
-    #setup delay here
-    for j in displayalbum:
-        #print(j)
-        changebg(j)
-        time.sleep(int(delay))
-
-    #keep exicuting program?
-    answer = input("keep program running? y/n: ")
-    if answer == 'y':
-        pass
-    else:
-        running = False
+        delay = input('Enter transition time desired: ')
+        #setup delay here
+        for j in displayalbum:
+            #print(j)
+            changebg(j)
+            time.sleep(int(delay))
+        #keep exicuting program?
+        #answer = input("keep program running? y/n: ")
+        #if answer == 'y':
+            #pass
+        #else:
+            #running = False
 
 if __name__ == '__main__': main()
